@@ -1,0 +1,16 @@
+{
+  "require": {
+    "slim/slim": "2.6.2",
+    "slim/views": "0.1.3",
+    "php-curl-class/php-curl-class": "7.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spring_App\\": "app/"
+    },
+    "files": [
+      "app/Includes/Bootstrap.php",
+      "app/Includes/Functions.php"
+    ]
+  }
+}

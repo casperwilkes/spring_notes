@@ -1,0 +1,11 @@
+# Multiple Environment config, set this to development, staging or production
+SetEnv ENV dev
+
+RewriteEngine on
+
+# Don't rewrite if files or directories
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Send everything to the index
+RewriteRule ^ index.php [QSA,L]
