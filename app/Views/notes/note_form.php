@@ -17,7 +17,7 @@
                                 <textarea class="form-control"
                                           id="body"
                                           name="body"
-                                          rows=4
+                                          rows=8
                                           required="required"
                                           placeholder="Note Body"><?= isset($body) ? $body : ''; ?></textarea>
                         </div>
@@ -37,5 +37,4 @@
                 </div>
         </fieldset>
     </form>
-</div>
 </div>

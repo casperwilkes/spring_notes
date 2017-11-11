@@ -56,7 +56,7 @@
 
             <header class="row">
                 <div class="col-sm-12">
-                    <p class="h2 text-center"><?= isset($header) ? $header : ''; ?></p>
+                    <h2 class="text-center"><?= isset($header) ? $header : ''; ?></h2>
                 </div>
             </header>
 

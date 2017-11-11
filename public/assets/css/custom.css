@@ -8,5 +8,10 @@ pre {
 
 #api dd {
     margin-left: 20px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
+}
+
+textarea.form-control {
+    display: inline;
+    overflow: hidden;
 }
