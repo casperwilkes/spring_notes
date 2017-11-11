@@ -93,7 +93,7 @@ $env = 'dev';
 
 ## How to use the configs ##
 
-An abbreviated explanation of config files is provided here. For a more comprehensive explanation, see the `./Configs.md`
+An abbreviated explanation of config files is provided here. For a more comprehensive explanation, see the [Configs.md](Configs.md)
 file.
 
 The config files are personalized settings for whatever environment the application is currently set on. Config files should
@@ -106,8 +106,6 @@ after that feature.
 
 The beauty of this setup is that you build upon already defined default settings which you can then tweak without having to redefine
 default presets. You only need to modify specific settings. 
-
-For more information, see the `Configs.md` file. 
 
 ## Running the Application ##
 
