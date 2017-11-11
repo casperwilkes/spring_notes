@@ -5,6 +5,7 @@
  *  Handles note content handling
  * History:
  *  110717 - Lincoln: Created file
+ *  111117 - Lincoln: Updated the updateNote method
  */
 
 
@@ -151,16 +152,41 @@ class Note {
      */
     public function updateNote(array $data) {
         try {
-            $sql = 'UPDATE notes'
-                   . ' SET title = :title, body = :body, updated_at = CURRENT_TIMESTAMP'
-                   . ' WHERE id = :id';
+            // Extract the id //
+            $id = $data['id'];
+            // Remove it from data array //
+            unset($data['id']);
+            // Pull the keys //
+            $keys = array_keys($data);
 
+            // Start the sql //
+            $sql = 'UPDATE notes SET';
+
+            // Loop through the values //
+            foreach ($keys as $kv) {
+                $sql .= " {$kv} = :{$kv},";
+            }
+
+            // Finish up the sql //
+            $sql .= ' updated_at = CURRENT_TIMESTAMP'
+                    . ' WHERE id = :id';
+
+            // Prep the interaction //
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':id', $data['id'], \PDO::PARAM_INT);
-            $stmt->bindParam(':title', $data['title']);
-            $stmt->bindParam(':body', $data['body']);
+            $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
 
+            // Bind the data values //
+            foreach ($data as $dk => $dv) {
+                $stmt->bindValue(":{$dk}", $dv);
+            }
+
+
+            //$stmt->bindParam(':title', $data['title']);
+            //$stmt->bindParam(':body', $data['body']);
+            //
             return $stmt->execute();
+
+            //return $sql;
         } catch (\PDOException $ex) {
             $this->log->exLog($ex, __METHOD__);
 

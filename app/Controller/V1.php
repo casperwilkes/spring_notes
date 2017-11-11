@@ -5,7 +5,9 @@
  *  API controller
  * History:
  *  110517 - Lincoln: Created file
+ *  111117 - Lincoln: Updated the update route
  */
+
 use Spring_App\Model\Note;
 
 /**
@@ -142,18 +144,23 @@ $app->group('/v1', function () use ($app, $log) {
                 $data = json_decode($pd, true);
                 $data['id'] = $id;
 
-                if ($data['id'] === '') {
+                // Check body is not empty //
+                if (!isset($data['id']) || $data['id'] === '') {
                     $body['error'][] = array('message' => 'User id is a required field');
                 }
-                if ($data['title'] === '') {
-                    $body['error'][] = array('message' => 'Note title is a required field');
-                }
-                if ($data['body'] === '') {
-                    $body['error'][] = array('message' => 'Note body is a required field');
+
+                // Check that we got a title or body //
+                if (!isset($data['title']) && !isset($data['body'])) {
+                    $body['error'][] = array('message' => 'Either title or body are required');
                 }
 
-                if (!in_array('', $data, true)) {
+                // Check our array doesn't have empty values //
+                if (in_array('', $data, true)) {
+                    $body['error'][] = array('message' => 'either title or body cannot be empty');
+                } else {
+                    // Send the update //
                     $results = $note->updateNote($data);
+                    // Get results //
                     if ($results === false) {
                         $body['error'][] = array('message' => 'Unable to update note at this time.');
                     } else {
