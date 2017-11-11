@@ -72,7 +72,7 @@ There are 2 different places that you can set the environment up: `./public/.hta
 The reason I have included separate ways is because some people prefer one over the other. Both preferences are explained below.
 
 **Note:**
->If you set the `.htaccess`, you will not need to set the `bootstrap.php`. 
+_If you set the `.htaccess`, you will not need to set the `bootstrap.php`._ 
 
 #### Setting the Environment With .htaccess ####
 
@@ -93,81 +93,21 @@ $env = 'dev';
 
 ## How to use the configs ##
 
-The config files are very important, and may require some explaining. There are base configs, and configs that are setup
-based on what environment the application is setup in. I've created a function that will examine the environment, and merge
-all of the configs needed for that particular use case. In most cases, the default configs are enough. In some instances though,
-you will want a particular setting over another. That is where the configs come in.
+An abbreviated explanation of config files is provided here. For a more comprehensive explanation, see the `./Configs.md`
+file.
 
-**Note**
-> The function first looks at the base config, and then merges the environment over the top of that. Any key overwritten will be coming 
-from the environment config. 
+The config files are personalized settings for whatever environment the application is currently set on. Config files should
+not interfere with each other. As long as the environment is set correctly, the configs set for `dev` should not interfere 
+with the config settings for `prod`. 
 
-### Configs: Example Usage ###
+The main take away is that there should be a config directory setup for your environment. If your environment is named `my_box`,
+and you want personalized settings for a specific feature, you need to have a config dir named `my_box`, and a config file named 
+after that feature. 
 
-Let's say that for different environments, you have different database connection settings. 
+The beauty of this setup is that you build upon already defined default settings which you can then tweak without having to redefine
+default presets. You only need to modify specific settings. 
 
-**Dev**: username = dev_user, password = dev_pass, and database = dev_db
-
-**QA**: username = qa_user, password = dev_pass, and database = dev_db.
-
-**my_box**: username = dev_user, password = password, and database = dev_db.
-
-Your config setup would be:
-
-```text
-./App
-    /Configs
-        /dev
-            db.php
-        /qa
-            db.php
-        /prod
-            db.php
-        /my_box
-            db.php
-    db.php
-```
-
-You're base settings would look like the following:
-
-`configs/db.php`:
-```php
-return array(
-    'dsn' => 'mysql:dbname=dev_db;host=127.0.0.1;port=3306',
-    'username' => 'dev_user',
-    'password' => 'dev_pass',
-);
-```
-
-Because only the username has changed in your QA environment, that's all we need to change in the config.
-
-`configs/qa/db.php`
-```php
-return array(
-    'username' => 'qa_user',
-);
-```
-
-And because only your password changed in your personal environment, that's all that needs to be changed in the `my_box` environment
-`configs/my_box/db.php`
-```php
-return array(
-    'password' => 'password',
-);
-```
-
-### Config usage ###
-
-To use the config setting in the code, all you do is use the function to pull the configs in as an array.
-
-With the function, all you need to do is call the file by name without the extension. 
-
-For our above example of `db.php`:
-
-```php
-// You now have a config array //
-$config = loadConfig(db);
-```
+For more information, see the `Configs.md` file. 
 
 ## Running the Application ##
 
@@ -183,7 +123,9 @@ This file:
 * Imports some test data to the new tables
 
 **Note:**
-> I would recommend setting up a database config file or at least looking at the one in `app/configs/db.php`
+* _I would recommend setting up a database config file or at least looking at the one in `app/configs/db.php`_
+* _The default password for all of the accounts besides test is `password`_
+
 
 ### Routes ###
 
@@ -196,21 +138,15 @@ I've setup the .htaccess to point all traffic into the `public` directory to the
 
 ### Using the API ###
 
-I've added authentication to the API, so in order to use it without going through the application, you will need
-to include the `key` and `token` tokens with your requests. These tokens can be found at: `Configs/app_tokens.php`.
+Because I wanted to show several different ways of doing things throughout the application, I chose to keep
+the API focused on Notes only. The User data is all handled directly through the controller/model/database layers. 
 
-Because I wanted to show several different ways of doing different things throughout the application, I chose to keep
-the API notes only. The user stuff is all handled directly through the controller/model/database layers. 
+**Note:**
 
-#### Sample Routes ####
+_I've added authentication to the API, so in order to use it without going through the application, you will need
+to include the `key` and `token` tokens with your requests.These tokens can be found at: `.app/Configs/app_tokens.php`._
 
-To get all notes in the database: GET- `http://localhost/spring_notes/public/v1/notes?key=$2y$10$Q7hi&token=IQlFFY3A96BJveDtOPQ9Nf40i2Vf4QV0g8IoDYA8RZtgTD06`
-
-To get note with id of 1: GET - `http://localhost/spring_notes/public/v1/notes/1?key=$2y$10$Q7hi&token=IQlFFY3A96BJveDtOPQ9Nf40i2Vf4QV0g8IoDYA8RZtgTD06`
-
-To get all notes for user 2: GET - `http://localhost/spring_notes/public/v1/notes/2/user_id?key=$2y$10$Q7hi&token=IQlFFY3A96BJveDtOPQ9Nf40i2Vf4QV0g8IoDYA8RZtgTD06`
-
-There are also create/update/delete routes
+For more information, go to `http://localhost/spring_notes/public/api`
 
 ## Contact ###
 
