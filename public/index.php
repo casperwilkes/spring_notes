@@ -5,6 +5,7 @@
  *  Load application and run it
  * History:
  *  110517 - Lincoln: Created file
+ *  111117 - #3 - Lincoln: Added a route alias for the API
  */
 
 //
@@ -74,6 +75,7 @@ $app->hook('slim.before', function () use ($app, $navigation, $messenger) {
     alias_url($app, '/login', '/users/login');
     alias_url($app, '/logout', '/users/logout');
     alias_url($app, '/register', '/users/register');
+    alias_url($app, '/api', '/v1');
 });
 
 // Api token authorization //

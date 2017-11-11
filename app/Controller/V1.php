@@ -5,7 +5,8 @@
  *  API controller
  * History:
  *  110517 - Lincoln: Created file
- *  111117 - Lincoln: Updated the update route
+ *  111117 - #1 - Lincoln: Updated the update route
+ *  111117 - #3 - Lincoln: Added a route to display API information
  */
 
 use Spring_App\Model\Note;
@@ -16,6 +17,17 @@ use Spring_App\Model\Note;
 $app->group('/v1', function () use ($app, $log) {
     // set log //
     $log->setLog('api');
+
+    /**
+     * Api information page
+     */
+    $app->get('/', function () use ($app) {
+        $data = array(
+            'title' => 'Using the API',
+            'header' => 'Interacting with the Spring Notes API',
+        );
+        $app->render('api/v1/index', $data);
+    })->name('api_home');
 
     /**
      * Notes group

@@ -5,6 +5,7 @@
  *  Handle the site navigation
  * History:
  *  110517 - Lincoln: Created file
+ *  111117 - #3 -Lincoln: Added link for api index
  */
 
 namespace Spring_App\Utility;
@@ -124,6 +125,10 @@ class Navigation {
             'notes' => array(
                 'link' => 'notes',
                 'display' => 'Notes',
+            ),
+            'api' => array(
+                'link' => 'api',
+                'display' => 'Api',
             ),
             'logOut' => array(
                 'link' => 'logout',
